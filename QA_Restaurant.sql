@@ -105,9 +105,20 @@ PRIMARY KEY(order_id),
 FOREIGN KEY(c_id) REFERENCES customers(cust_id));
 
 INSERT INTO orders (c_id) VALUES (1), (2), (3);
+INSERT INTO orders (c_id) VALUES (5), (6);
+UPDATE orders SET order_date="2022-09-10" WHERE order_id=1;
+UPDATE orders SET order_date="2022-09-05" WHERE order_id=2;
+UPDATE orders SET order_date="2022-09-21" WHERE order_id=3;
+UPDATE orders SET order_date="2022-09-16" WHERE order_id=14;
+UPDATE orders SET order_date="2022-09-04" WHERE order_id=16;
+DELETE FROM orders WHERE order_id=15;
+
+
 
 SHOW TABLES;
-SELECT * FROM orders;
+SELECT * FROM order_items;
+
+
 
 CREATE TABLE order_items(
 oi_id INT UNIQUE NOT NULL AUTO_INCREMENT,
@@ -118,7 +129,14 @@ PRIMARY KEY(oi_id),
 FOREIGN KEY (ord_id) REFERENCES orders (order_id),
 FOREIGN KEY (itm_id) REFERENCES menu_items (item_id));
 
-SELECT * FROM orders;
+INSERT INTO order_items (ord_id, itm_id, quantity) VALUES (1, 1, 2), (2, 4, 1), (3, 5, 2);
+INSERT INTO order_items (ord_id, itm_id, quantity) VALUES (14, 6, 3);
+INSERT INTO order_items (ord_id, itm_id, quantity) VALUES (16, 3, 5);
+
+
+SELECT * FROM customers;
+
+
 
 
 
