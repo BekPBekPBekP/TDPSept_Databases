@@ -122,8 +122,8 @@ SELECT * FROM order_items;
 
 CREATE TABLE order_items(
 oi_id INT UNIQUE NOT NULL AUTO_INCREMENT,
-ord_id INT UNIQUE NOT NULL,
-itm_id INT UNIQUE NOT NULL,
+ord_id INT NOT NULL,
+itm_id INT NOT NULL,
 quantity INT NOT NULL,
 PRIMARY KEY(oi_id),
 FOREIGN KEY (ord_id) REFERENCES orders (order_id),
