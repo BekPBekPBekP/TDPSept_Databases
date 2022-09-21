@@ -47,6 +47,7 @@ dietary_requirements BOOLEAN DEFAULT "0",
 PRIMARY KEY(cust_id));
 
 SHOW tables;
+DESCRIBE menu_items;
 
 SELECT * FROM menu_items;
 
@@ -93,7 +94,35 @@ VALUES ("Emma B", "07893456891", 1, "13 Sunnydale Drive", "S32 7np", 0);
 INSERT INTO menu_items (meal_name, meal_description, allergens, price)
 VALUES ("pad thai", "peanut noodles", 1, 13.49);
 
-SELECT * FROM menu_items;
+SELECT cust_name, postcode FROM customers;
+
+CREATE TABLE orders(
+order_id INT UNIQUE NOT NULL AUTO_INCREMENT,
+c_id INT NOT NULL,
+order_date DATE,
+total_price DECIMAL (2,2),
+PRIMARY KEY(order_id),
+FOREIGN KEY(c_id) REFERENCES customers(cust_id));
+
+INSERT INTO orders (c_id) VALUES (1), (2), (3);
+
+SHOW TABLES;
+SELECT * FROM orders;
+
+CREATE TABLE order_items(
+oi_id INT UNIQUE NOT NULL AUTO_INCREMENT,
+ord_id INT UNIQUE NOT NULL,
+itm_id INT UNIQUE NOT NULL,
+quantity INT NOT NULL,
+PRIMARY KEY(oi_id),
+FOREIGN KEY (ord_id) REFERENCES orders (order_id),
+FOREIGN KEY (itm_id) REFERENCES menu_items (item_id));
+
+SELECT * FROM orders;
+
+
+
+
 
 
 
