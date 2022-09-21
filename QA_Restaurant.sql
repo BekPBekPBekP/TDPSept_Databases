@@ -137,6 +137,18 @@ INSERT INTO order_items (ord_id, itm_id, quantity) VALUES (16, 3, 5);
 SELECT * FROM customers;
 
 
+SELECT 
+oi.id,
+ord_id,
+itm_id,
+price,
+quantity
+FROM orders
+LEFT JOIN menu_items
+ON itm_id = menu_items
+;
+
+
 
 
 
