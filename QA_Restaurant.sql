@@ -102,7 +102,7 @@ c_id INT NOT NULL,
 order_date DATE,
 total_price DECIMAL (2,2),
 PRIMARY KEY(order_id),
-FOREIGN KEY(c_id) REFERENCES customers(cust_id));
+FOREIGN KEY(c_id) REFERENCES customers(cust_id) ON DELETE CASCADE);
 
 INSERT INTO orders (c_id) VALUES (1), (2), (3);
 INSERT INTO orders (c_id) VALUES (5), (6);
@@ -120,32 +120,42 @@ SELECT * FROM order_items;
 
 
 
+
 CREATE TABLE order_items(
 oi_id INT UNIQUE NOT NULL AUTO_INCREMENT,
 ord_id INT NOT NULL,
 itm_id INT NOT NULL,
 quantity INT NOT NULL,
 PRIMARY KEY(oi_id),
-FOREIGN KEY (ord_id) REFERENCES orders (order_id),
-FOREIGN KEY (itm_id) REFERENCES menu_items (item_id));
+FOREIGN KEY (ord_id) REFERENCES orders (order_id) ON DELETE CASCADE,
+FOREIGN KEY (itm_id) REFERENCES menu_items (item_id) ON DELETE CASCADE);
 
 INSERT INTO order_items (ord_id, itm_id, quantity) VALUES (1, 1, 2), (2, 4, 1), (3, 5, 2);
 INSERT INTO order_items (ord_id, itm_id, quantity) VALUES (14, 6, 3);
 INSERT INTO order_items (ord_id, itm_id, quantity) VALUES (16, 3, 5);
 
 
+SELECT * FROM menu_items;
+SELECT * FROM menu_items WHERE meal_name LIKE "%i";
+
+SELECT COUNT(price) FROM menu_items;
+
+SELECT c_id FROM orders WHERE order_id=3;
+
+SELECT * FROM customers WHERE cust_id=(SELECT c_ID FROM orders WHERE order_id=5);
+SELECT meal_name FROM menu_items WHERE item_id=(SELECT itm_id FROM order_items WHERE ord_id=(SELECT order_id FROM orders WHERE c_id=(SELECT cust_id FROM customers WHERE cust_name="Dan B")));
+
+SELECT * FROM customers c JOIN orders o ON c.cust_id=o.c_id;
+
+SELECT * FROM customers c LEFT OUTER JOIN orders o ON c.cust_id=o.c_id;
+SELECT * FROM customers c RIGHT OUTER JOIN orders o ON c.cust_id=o.c_id;
+
+
+
+SHOW TABLES;
 SELECT * FROM customers;
 
-
-SELECT 
-oi.id,
-ord_id,
-itm_id,
-price,
-quantity
-FROM orders
-LEFT JOIN menu_items
-ON itm_id = menu_items
+SELECT oi_id, ord_id, itm_id, quantity FROM order_items oi LEFT JOIN menu_items mi ON oi.oi_id=mi.item_id;
 ;
 
 
